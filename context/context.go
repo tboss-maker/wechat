@@ -18,7 +18,7 @@ type Context struct {
 	PayKey         string
 
 	Cache cache.Cache
-	TokenExpire    int32
+	TokenExpire    int64
 	Writer  http.ResponseWriter
 	Request *http.Request
 

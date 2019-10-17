@@ -34,7 +34,7 @@ type Config struct {
 	PayKey         string //支付 - 商户后台设置的支付 key
 	Cache          cache.Cache
 	// 多公众号有效期兼容配置(用于新老微信服务同时使用)
-	TokenExpire    int32
+	TokenExpire    int64
 }
 
 // NewWechat init
