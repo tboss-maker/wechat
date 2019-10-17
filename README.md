@@ -528,7 +528,7 @@ type Config struct {
 
 ## 素材管理
 
-[素材管理API](https://godoc.org/github.com/silenceper/wechat/material#Material)
+[素材管理API](https://godoc.org/github.com/tboss-maker/wechat/material#Material)
 
 ## 小程序开发
 

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/silenceper/wechat/context"
-	"github.com/silenceper/wechat/util"
+	"github.com/tboss-maker/wechat/context"
+	"github.com/tboss-maker/wechat/util"
 )
 
 const (

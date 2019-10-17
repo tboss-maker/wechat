@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/silenceper/wechat"
-	"github.com/silenceper/wechat/message"
+	"github.com/tboss-maker/wechat/message"
 )
 
 func hello(rw http.ResponseWriter, req *http.Request) {

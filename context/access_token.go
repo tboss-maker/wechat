@@ -6,12 +6,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/silenceper/wechat/util"
+	"github.com/tboss-maker/wechat/util"
 )
 
 const (
 	//AccessTokenURL 获取access_token的接口
 	AccessTokenURL = "https://api.weixin.qq.com/cgi-bin/token"
+	// 多公众号有效期兼容配置(用于新老微信服务同时使用)
+	TokenExpire = 300
 )
 
 //ResAccessToken struct
@@ -79,7 +81,9 @@ func (ctx *Context) GetAccessTokenFromServer() (resAccessToken ResAccessToken, e
 	}
 
 	accessTokenCacheKey := fmt.Sprintf("access_token_%s", ctx.AppID)
-	expires := resAccessToken.ExpiresIn - 1500
+	// 兼容
+	//expires := resAccessToken.ExpiresIn - 1500
+	expires := TokenExpire
 	err = ctx.Cache.Set(accessTokenCacheKey, resAccessToken.AccessToken, time.Duration(expires)*time.Second)
 	return
 }
