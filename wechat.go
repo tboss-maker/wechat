@@ -33,6 +33,8 @@ type Config struct {
 	PayNotifyURL   string //支付 - 接受微信支付结果通知的接口地址
 	PayKey         string //支付 - 商户后台设置的支付 key
 	Cache          cache.Cache
+	// 多公众号有效期兼容配置(用于新老微信服务同时使用)
+	TokenExpire    int32
 }
 
 // NewWechat init
@@ -51,6 +53,7 @@ func copyConfigToContext(cfg *Config, context *context.Context) {
 	context.PayKey = cfg.PayKey
 	context.PayNotifyURL = cfg.PayNotifyURL
 	context.Cache = cfg.Cache
+	context.TokenExpire = cfg.TokenExpire
 	context.SetAccessTokenLock(new(sync.RWMutex))
 	context.SetJsAPITicketLock(new(sync.RWMutex))
 }
