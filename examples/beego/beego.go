@@ -5,7 +5,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/silenceper/wechat"
+	"github.com/tboss-maker/wechat"
 	"github.com/tboss-maker/wechat/message"
 )
 

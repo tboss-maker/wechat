@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/silenceper/wechat"
+	"github.com/tboss-maker/wechat"
 	"github.com/tboss-maker/wechat/message"
 )
 

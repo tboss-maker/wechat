@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/silenceper/wechat"
+	"github.com/tboss-maker/wechat"
 	"github.com/tboss-maker/wechat/message"
 )
 
