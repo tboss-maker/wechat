@@ -29,6 +29,10 @@ type reqMenu struct {
 	MatchRule *MatchRule `json:"matchrule,omitempty"`
 }
 
+type resCreateConditionalMenu struct {
+	util.CommonError
+	MenuID int64 `json:"menuid"`
+}
 //reqDeleteConditional 删除个性化菜单请求数据
 type reqDeleteConditional struct {
 	MenuID int64 `json:"menuid"`
@@ -102,12 +106,12 @@ type ButtonNew struct {
 
 //MatchRule 个性化菜单规则
 type MatchRule struct {
-	GroupID            int32  `json:"group_id,omitempty"`
-	Sex                int32  `json:"sex,omitempty"`
+	GroupID            string  `json:"group_id,omitempty"`
+	Sex                string  `json:"sex,omitempty"`
 	Country            string `json:"country,omitempty"`
 	Province           string `json:"province,omitempty"`
 	City               string `json:"city,omitempty"`
-	ClientPlatformType int32  `json:"client_platform_type,omitempty"`
+	ClientPlatformType string  `json:"client_platform_type,omitempty"`
 	Language           string `json:"language,omitempty"`
 }
 
@@ -178,10 +182,10 @@ func (menu *Menu) DeleteMenu() error {
 }
 
 //AddConditional 添加个性化菜单
-func (menu *Menu) AddConditional(buttons []*Button, matchRule *MatchRule) error {
+func (menu *Menu) AddConditional(buttons []*Button, matchRule *MatchRule) (int64, error) {
 	accessToken, err := menu.GetAccessToken()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	uri := fmt.Sprintf("%s?access_token=%s", menuAddConditionalURL, accessToken)
@@ -192,10 +196,21 @@ func (menu *Menu) AddConditional(buttons []*Button, matchRule *MatchRule) error 
 
 	response, err := util.PostJSON(uri, reqMenu)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return util.DecodeWithCommonError(response, "AddConditional")
+	var resCreateConditionalMenu resCreateConditionalMenu
+	err = json.Unmarshal(response, &resCreateConditionalMenu)
+	if err != nil {
+		return 0, err
+	}
+
+	if resCreateConditionalMenu.ErrCode != 0 {
+		err = fmt.Errorf("AddConditional Error , errcode=%d , errmsg=%s", resCreateConditionalMenu.ErrCode, resCreateConditionalMenu.ErrMsg)
+		return 0, err
+	}
+
+	return resCreateConditionalMenu.MenuID, nil
 }
 
 //DeleteConditional 删除个性化菜单
