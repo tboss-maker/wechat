@@ -104,7 +104,7 @@ func (t *Tag) UpdateTag(id int64, name string) error {
 type tagListInfo struct {
 	Id int64 `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
-	Count int64 `json:",omitempty"`
+	Count int64 `json:"count,omitempty"`
 }
 
 type resGetTagList struct {
