@@ -109,7 +109,7 @@ type tagListInfo struct {
 
 type resGetTagList struct {
 	util.CommonError
-	Tag []tagListInfo `json:"tag"`
+	Tags []tagListInfo `json:"tags"`
 }
 
 func (t *Tag) GetTags() ([]tagListInfo, error) {
