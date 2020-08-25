@@ -25,17 +25,17 @@ type Tag struct {
 
 
 type ReqCreateTag struct {
-	Tag createTagInfo `json:"tag"`
+	Tag CreateTagInfo `json:"tag"`
 }
 
-type createTagInfo struct {
+type CreateTagInfo struct {
 	Id int64 `json:"id"`
 	Name string `json:"name"`
 }
 
 type ResCreateTag struct {
 	util.CommonError
-	Tag createTagInfo `json:"tag"`
+	Tag CreateTagInfo `json:"tag"`
 }
 
 func NewTag(context *context.Context) *Tag {
@@ -44,31 +44,31 @@ func NewTag(context *context.Context) *Tag {
 	return tag
 }
 
-func (t *Tag) CreateTag(name string) (createTagInfo, error) {
+func (t *Tag) CreateTag(name string) (CreateTagInfo, error) {
 	accessToken, err := t.GetAccessToken()
 	if err != nil {
-		return createTagInfo{}, err
+		return CreateTagInfo{}, err
 	}
 
 	uri := fmt.Sprintf("%s?access_token=%s", userCreateTagURL, accessToken)
 	reqMenu := &ReqCreateTag{
-		Tag: createTagInfo{Name: name},
+		Tag: CreateTagInfo{Name: name},
 	}
 
 	response, err := util.PostJSON(uri, reqMenu)
 	if err != nil {
-		return createTagInfo{}, err
+		return CreateTagInfo{}, err
 	}
 
 	var ResCreateTag ResCreateTag
 	err = json.Unmarshal(response, &ResCreateTag)
 	if err != nil {
-		return createTagInfo{}, err
+		return CreateTagInfo{}, err
 	}
 
 	if ResCreateTag.ErrCode != 0 {
 		err = fmt.Errorf("CreateTag Error , errcode=%d , errmsg=%s", ResCreateTag.ErrCode, ResCreateTag.ErrMsg)
-		return createTagInfo{}, err
+		return CreateTagInfo{}, err
 	}
 
 	return ResCreateTag.Tag, nil
@@ -101,7 +101,7 @@ func (t *Tag) UpdateTag(id int64, name string) error {
 	return util.DecodeWithCommonError(response, "UpdateTag")
 }
 
-type tagListInfo struct {
+type TagListInfo struct {
 	Id int64 `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Count int64 `json:"count,omitempty"`
@@ -109,10 +109,10 @@ type tagListInfo struct {
 
 type resGetTagList struct {
 	util.CommonError
-	Tags []tagListInfo `json:"tags"`
+	Tags []TagListInfo `json:"tags"`
 }
 
-func (t *Tag) GetTags() ([]tagListInfo, error) {
+func (t *Tag) GetTags() ([]TagListInfo, error) {
 	accessToken, err := t.GetAccessToken()
 	if err != nil {
 		return nil, err
